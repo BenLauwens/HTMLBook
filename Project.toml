@@ -1,0 +1,8 @@
+name = "HTMLBook"
+uuid = "f40f4a56-e1b0-47c8-92d2-85c660c9282a"
+authors = ["Ben Lauwens <ben.lauwens@gmail.com>"]
+version = "0.1.0"
+
+[deps]
+CommonMark = "a80b9123-70ca-4bc0-993e-6e3bcb318db6"
+NodeJS = "2bd173c7-0d6d-553b-b6af-13a54713934c"
