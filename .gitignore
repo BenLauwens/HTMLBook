@@ -24,3 +24,4 @@ docs/site/
 Manifest.toml
 deps/package.json
 deps/node_modules/
+.DS_Store
