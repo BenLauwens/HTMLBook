@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="UTF-8" />
     <title>Title of document</title>
@@ -141,21 +141,31 @@
       integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk"
       crossorigin="anonymous"
     ></script>
+    <script src="https://unpkg.com/pagedjs/dist/paged.polyfill.js"></script>
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        renderMathInElement(document.body, {
-          // customised options
-          // • auto-render specific keys, e.g.:
-          delimiters: [
-            { left: "\\(", right: "\\)", display: false },
-            { left: "\\[", right: "\\]", display: true },
-          ],
-          // • rendering keys, e.g.:
-          throwOnError: false,
-          output: "mathml",
-        });
-        hljs.highlightAll();
-      });
+      class handlers extends Paged.Handler {
+        constructor(chunker, polisher, caller) {
+          super(chunker, polisher, caller);
+        }
+
+        beforeParsed(content) {
+          renderMathInElement(content, {
+            // customised options
+            // • auto-render specific keys, e.g.:
+            delimiters: [
+              { left: "\\(", right: "\\)", display: false },
+              { left: "\\[", right: "\\]", display: true },
+            ],
+            // • rendering keys, e.g.:
+            throwOnError: false,
+            output: "mathml",
+          });
+          content.querySelectorAll("pre code").forEach((el) => {
+            hljs.highlightElement(el);
+          });
+        }
+      }
+      Paged.registerHandlers(handlers);
     </script>
   </head>
 
@@ -213,6 +223,7 @@
     <pre><code class="language-julia">function itworked(it::String)
     return it^2
 end</code></pre>
+    <p>This is a test!</p>
     <section data-type="chapter">
       <h1 id="##chapter#225">First Chapter</h1>
       <p>This is a test. <b>Hello</b>, World!</p>
@@ -287,10 +298,6 @@ end</code>
             \(E=mc^2\)
           </foreignObject>
         </svg>
-        <div data-type="theorem">
-          <h1 id="##theorem#229">Archimedes</h1>
-          <p>This is a theorem!</p>
-        </div>
       </section>
     </section>
   </body>
